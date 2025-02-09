@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">ShopCart</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero text-center" id="home">
+        <div class="container">
+            <h1 class="display-4">Welcome to ShopCart</h1>
+            <p class="lead">Discover amazing products at great prices</p>
+            <a href="#products" class="btn btn-primary btn-lg">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Featured Products</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="https://storiesflistgv2.blob.core.windows.net/stories/2015/12/FlipTrends_smartphonesbanner2.jpg" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Smartphones</h5>
+                            <p class="card-text">Latest model with advanced features</p>
+                            <p class="price">$699.99</p>
+                            <button class="btn btn-primary order-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="https://3.bp.blogspot.com/-OZBr--CxWuk/W0Mn9LGCqJI/AAAAAAAAMG8/SkEDcxURIYweHY_QvEoysz9RDcW7fjwdACLcBGAs/s1600/Image.jpg" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Laptops</h5>
+                            <p class="card-text">High-performance computing device</p>
+                            <p class="price">$999.99</p>
+                            <button class="btn btn-primary order-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="https://cdn.wccftech.com/wp-content/uploads/2017/09/Beats-Studio3-Wireless-Headphones-With-Pure-Adaptive-Noise-Cancelation-1.jpg" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Headphones</h5>
+                            <p class="card-text">Premium wireless headphones</p>
+                            <p class="price">$199.99</p>
+                            <button class="btn btn-primary order-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2024 ShopCart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Order handling
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('order-btn')) {
+                const card = e.target.closest('.card');
+                const itemName = card.querySelector('.card-title').textContent;
+                const price = parseFloat(card.querySelector('.price').textContent.replace('$', ''));
+                showOrderModal(itemName, price);
+            }
+        });
+
+        function showOrderModal(itemName, price) {
+            const modalHTML = `
+                <div class="modal fade" id="orderModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Complete Your Order</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="orderForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Item: ${itemName}</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Price: $${price}</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" name="customerName" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Your Email</label>
+                                        <input type="email" class="form-control" name="customerEmail" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="submitOrder('${itemName}', ${price})">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            const modal = new bootstrap.Modal(document.getElementById('orderModal'));
+            modal.show();
+
+            document.getElementById('orderModal').addEventListener('hidden.bs.modal', function () {
+                this.remove();
+            });
+        }
+
+        async function submitOrder(itemName, price) {
+            const form = document.getElementById('orderForm');
+            const customerName = form.querySelector('[name="customerName"]').value;
+            const customerEmail = form.querySelector('[name="customerEmail"]').value;
+
+            if (!customerName || !customerEmail) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const orderData = {
+                itemName,
+                price,
+                customerName,
+                customerEmail
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Order placed successfully!');
+                    bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                alert('Error placing order: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
