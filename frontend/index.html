@@ -1,3 +1,4 @@
+Desktop/javascript/frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -199,6 +200,7 @@
             });
         }
 
+        // Replace the existing submitOrder function with this:
         async function submitOrder(itemName, price) {
             const form = document.getElementById('orderForm');
             const customerName = form.querySelector('[name="customerName"]').value;
@@ -213,7 +215,8 @@
                 itemName,
                 price,
                 customerName,
-                customerEmail
+                customerEmail,
+                status: 'pending'
             };
 
             try {
@@ -221,22 +224,33 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(orderData)
                 });
 
                 const data = await response.json();
                 
-                if (response.ok) {
-                    alert('Order placed successfully!');
-                    bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
-                } else {
-                    throw new Error(data.message);
+                if (!response.ok) {
+                    throw new Error(data.message || 'Error placing order');
                 }
+
+                alert('Order placed successfully!');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+                modal.hide();
+                form.reset();
             } catch (error) {
+                console.error('Error:', error);
                 alert('Error placing order: ' + error.message);
             }
         }
+
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message. We will get back to you soon!');
+            this.reset();
+        });
     </script>
 </body>
 </html>
