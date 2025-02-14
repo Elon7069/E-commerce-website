@@ -1,52 +1,169 @@
-/frontend/admin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Orders</title>
+    <title>ShopCart - Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         .navbar-brand {
             font-size: 1.5rem;
             font-weight: bold;
         }
-        .status-pending { color: orange; font-weight: bold; }
-        .status-confirmed { color: blue; font-weight: bold; }
-        .status-completed { color: green; font-weight: bold; }
-        .status-cancelled { color: red; font-weight: bold; }
-        .table-container {
-            margin-top: 2rem;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .dashboard-stats {
+            padding: 20px 0;
+            background: #f8f9fa;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
             border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .status-pending { color: #ffc107; }
+        .status-confirmed { color: #0d6efd; }
+        .status-completed { color: #198754; }
+        .status-cancelled { color: #dc3545; }
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
             overflow: hidden;
+            margin-top: 20px;
         }
-        .refresh-btn {
-            margin-bottom: 1rem;
+        .action-buttons .btn {
+            margin: 2px;
         }
-        .no-orders {
-            text-align: center;
-            padding: 2rem;
-            color: #666;
+        .contact-info {
+            font-size: 0.9rem;
+        }
+        .filter-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
+    <!-- Loading Spinner -->
+    <div class="loading" id="loadingSpinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <span class="navbar-brand">Admin Dashboard</span>
+            <span class="navbar-brand">
+                <i class="fas fa-shield-alt"></i> Admin Dashboard
+            </span>
             <div>
-                <a href="index.html" class="btn btn-outline-light me-2">Back to Store</a>
-                <button class="btn btn-primary refresh-btn" onclick="fetchOrders()">
-                    <i class="fas fa-sync-alt"></i> Refresh Orders
+                <a href="index.html" class="btn btn-outline-light me-2">
+                    <i class="fas fa-store"></i> Back to Store
+                </a>
+                <button class="btn btn-primary" onclick="fetchOrders()">
+                    <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Orders Section -->
     <div class="container mt-4">
+        <!-- Dashboard Stats -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-shopping-cart fa-2x text-primary mb-2"></i>
+                    <h3 id="totalOrders">0</h3>
+                    <p class="text-muted mb-0">Total Orders</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                    <h3 id="pendingOrders">0</h3>
+                    <p class="text-muted mb-0">Pending Orders</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                    <h3 id="completedOrders">0</h3>
+                    <p class="text-muted mb-0">Completed Orders</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <i class="fas fa-times-circle fa-2x text-danger mb-2"></i>
+                    <h3 id="cancelledOrders">0</h3>
+                    <p class="text-muted mb-0">Cancelled Orders</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-section">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" id="searchInput" 
+                               placeholder="Search orders...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" id="dateFilter">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-secondary w-100" onclick="resetFilters()">
+                        Reset Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
         <div class="table-container">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -56,7 +173,8 @@
                             <th>Item</th>
                             <th>Price</th>
                             <th>Customer</th>
-                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Location</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -69,32 +187,106 @@
         </div>
     </div>
 
-    <!-- Bootstrap and Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         const BASE_URL = 'http://localhost:5000';
+        let allOrders = [];
 
+        // Show/hide loading spinner
+        function toggleLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'flex' : 'none';
+        }
+
+        // Fetch orders with loading state
         async function fetchOrders() {
+            toggleLoading(true);
             try {
-                const response = await fetch(`${BASE_URL}/api/orders`);
-                if (!response.ok) throw new Error('Failed to fetch orders');
+                const response = await fetch(`${BASE_URL}/api/orders`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status); // Debug log
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Server response:', errorText);
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const orders = await response.json();
-                displayOrders(orders);
+                console.log('Fetched orders:', orders); // Debug log
+
+                if (!Array.isArray(orders)) {
+                    throw new Error('Invalid data format received from server');
+                }
+
+                allOrders = orders;
+                updateDashboardStats();
+                applyFiltersAndDisplay();
+
             } catch (error) {
-                console.error('Error:', error);
-                showError('Failed to load orders. Please try again.');
+                console.error('Fetch error:', error);
+                document.getElementById('ordersTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center text-danger py-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Failed to load orders: ${error.message}
+                        </td>
+                    </tr>`;
+            } finally {
+                toggleLoading(false);
             }
         }
 
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            document.getElementById('totalOrders').textContent = allOrders.length;
+            document.getElementById('pendingOrders').textContent = 
+                allOrders.filter(order => order.status === 'pending').length;
+            document.getElementById('completedOrders').textContent = 
+                allOrders.filter(order => order.status === 'completed').length;
+            document.getElementById('cancelledOrders').textContent = 
+                allOrders.filter(order => order.status === 'cancelled').length;
+        }
+
+        // Apply filters and display orders
+        function applyFiltersAndDisplay() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            const filteredOrders = allOrders.filter(order => {
+                const matchesSearch = 
+                    order.itemName.toLowerCase().includes(searchTerm) ||
+                    order.customerName.toLowerCase().includes(searchTerm) ||
+                    order.customerEmail.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
+                
+                const matchesDate = !dateFilter || 
+                    new Date(order.orderDate).toLocaleDateString() === new Date(dateFilter).toLocaleDateString();
+
+                return matchesSearch && matchesStatus && matchesDate;
+            });
+
+            displayOrders(filteredOrders);
+        }
+
+        // Display orders in table
         function displayOrders(orders) {
             const tableBody = document.getElementById('ordersTableBody');
-            if (!orders.length) {
+            
+            if (!orders?.length) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="no-orders">
-                            <i class="fas fa-inbox fa-2x mb-3"></i>
-                            <p>No orders found</p>
+                        <td colspan="8" class="text-center py-4">
+                            <i class="fas fa-inbox fa-2x mb-3 text-muted"></i>
+                            <p class="text-muted">No orders found</p>
                         </td>
                     </tr>`;
                 return;
@@ -102,36 +294,44 @@
 
             tableBody.innerHTML = orders.map(order => `
                 <tr>
-                    <td>${formatDate(order.orderDate)}</td>
+                    <td>${formatDate(order.orderDate || new Date())}</td>
                     <td>${escapeHtml(order.itemName)}</td>
-                    <td>$${order.price.toFixed(2)}</td>
+                    <td>$${(order.price || 0).toFixed(2)}</td>
                     <td>${escapeHtml(order.customerName)}</td>
-                    <td>${escapeHtml(order.customerEmail)}</td>
-                    <td class="status-${order.status}">${order.status.toUpperCase()}</td>
+                    <td class="contact-info">
+                        <div><i class="fas fa-envelope"></i> ${escapeHtml(order.customerEmail)}</div>
+                        <div><i class="fas fa-phone"></i> ${escapeHtml(order.phoneNumber)}</div>
+                    </td>
+                    <td>${escapeHtml(order.location)}</td>
+                    <td class="status-${order.status || 'pending'}">${(order.status || 'pending').toUpperCase()}</td>
                     <td>${getActionButtons(order)}</td>
                 </tr>
             `).join('');
         }
 
+        // Generate action buttons based on order status
         function getActionButtons(order) {
-            const buttons = {
-                pending: `
-                    <div class="btn-group btn-group-sm">
-                        <button class="btn btn-success" onclick="updateOrderStatus('${order._id}', 'confirmed')">
+            if (order.status === 'pending') {
+                return `
+                    <div class="action-buttons">
+                        <button class="btn btn-sm btn-success" onclick="updateOrderStatus('${order._id}', 'confirmed')">
                             <i class="fas fa-check"></i> Confirm
                         </button>
-                        <button class="btn btn-danger" onclick="updateOrderStatus('${order._id}', 'cancelled')">
+                        <button class="btn btn-sm btn-danger" onclick="updateOrderStatus('${order._id}', 'cancelled')">
                             <i class="fas fa-times"></i> Cancel
                         </button>
-                    </div>`,
-                confirmed: `
+                    </div>`;
+            }
+            if (order.status === 'confirmed') {
+                return `
                     <button class="btn btn-sm btn-success" onclick="updateOrderStatus('${order._id}', 'completed')">
                         <i class="fas fa-check-double"></i> Complete
-                    </button>`
-            };
-            return buttons[order.status] || '';
+                    </button>`;
+            }
+            return '';
         }
 
+        // Update order status
         async function updateOrderStatus(orderId, newStatus) {
             try {
                 const response = await fetch(`${BASE_URL}/api/orders/${orderId}/status`, {
@@ -140,16 +340,16 @@
                     body: JSON.stringify({ status: newStatus })
                 });
 
-                if (!response.ok) throw new Error('Failed to update order status');
+                if (!response.ok) throw new Error('Failed to update status');
                 
                 await fetchOrders();
                 showSuccess(`Order status updated to ${newStatus.toUpperCase()}`);
             } catch (error) {
-                console.error('Error:', error);
                 showError('Failed to update order status');
             }
         }
 
+        // Utility functions
         function formatDate(dateString) {
             return new Date(dateString).toLocaleString('en-US', {
                 year: 'numeric',
@@ -160,8 +360,10 @@
             });
         }
 
+        // Replace the escapeHtml function with this safer version:
         function escapeHtml(unsafe) {
-            return unsafe
+            if (!unsafe) return '';
+            return String(unsafe)
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
@@ -177,11 +379,71 @@
             alert(message); // You can replace this with a better notification system
         }
 
-        // Initial load
-        document.addEventListener('DOMContentLoaded', fetchOrders);
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('statusFilter').value = 'all';
+            document.getElementById('dateFilter').value = '';
+            applyFiltersAndDisplay();
+        }
 
-        // Auto refresh every 30 seconds
-        setInterval(fetchOrders, 30000);
+        // Show toast notifications
+        function showToast(message, type = 'info') {
+            const backgroundColor = {
+                success: '#198754',
+                error: '#dc3545',
+                info: '#0dcaf0'
+            }[type];
+
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: "top",
+                position: 'right',
+                backgroundColor,
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', applyFiltersAndDisplay);
+        document.getElementById('statusFilter').addEventListener('change', applyFiltersAndDisplay);
+        document.getElementById('dateFilter').addEventListener('change', applyFiltersAndDisplay);
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchOrders();
+            setInterval(fetchOrders, 30000); // Auto refresh every 30 seconds
+        });
+
+        // Insert a test order
+        async function insertTestOrder() {
+            try {
+                const response = await fetch(`${BASE_URL}/api/orders`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        itemName: "Test Item",
+                        price: 99.99,
+                        customerName: "Test Customer",
+                        customerEmail: "test@example.com",
+                        phoneNumber: "1234567890",
+                        location: "Test Location",
+                        status: "pending",
+                        orderDate: new Date()
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to insert test order');
+                
+                await fetchOrders();
+                showSuccess('Test order inserted successfully');
+            } catch (error) {
+                showError('Failed to insert test order');
+            }
+        }
+
+        // Insert a test order on page load for demonstration
+        document.addEventListener('DOMContentLoaded', insertTestOrder);
     </script>
 </body>
 </html>

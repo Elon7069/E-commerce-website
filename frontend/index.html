@@ -1,69 +1,81 @@
-Desktop/javascript/frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Store</title>
+    <title>ShopCart - Your One-Stop Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da');
             background-size: cover;
             background-position: center;
             color: white;
             padding: 100px 0;
         }
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
+        .category-section { 
+            padding: 40px 0; 
+            border-bottom: 1px solid #eee;
         }
-        .price {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #28a745;
+        .card-img-top { 
+            height: 200px; 
+            object-fit: cover; 
         }
-        footer {
-            background-color: #343a40;
+        .price { 
+            color: #28a745; 
+            font-size: 1.25rem; 
+            font-weight: bold; 
+        }
+        .category-title {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .card {
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .footer {
+            background: #343a40;
             color: white;
-            padding: 20px 0;
+            padding: 40px 0;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="#">ShopCart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
+                        <a class="nav-link" href="#electronics">Electronics</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#products">Products</a>
+                        <a class="nav-link" href="#fashion">Fashion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin.html">Admin</a>
+                        <a class="nav-link" href="#food">Food</a>
                     </li>
                 </ul>
+                <a href="admin.html" class="btn btn-outline-light">Admin Panel</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero text-center" id="home">
+    <section class="hero text-center">
         <div class="container">
             <h1 class="display-4">Welcome to ShopCart</h1>
             <p class="lead">Discover amazing products at great prices</p>
@@ -71,91 +83,186 @@ Desktop/javascript/frontend/index.html -->
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section id="products" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Featured Products</h2>
+    <!-- Categories -->
+    <div class="container">
+        <!-- Electronics Section -->
+        <section id="electronics" class="category-section">
+            <h2 class="category-title">Electronics</h2>
             <div class="row">
+                <!-- Smartphones -->
                 <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://storiesflistgv2.blob.core.windows.net/stories/2015/12/FlipTrends_smartphonesbanner2.jpg" class="card-img-top" alt="Product 1">
+                    <div class="card h-100">
+                        <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1645552346288" class="card-img-top" alt="iPhone 13 Pro">
                         <div class="card-body">
-                            <h5 class="card-title">Smartphones</h5>
-                            <p class="card-text">Latest model with advanced features</p>
-                            <p class="price">$699.99</p>
-                            <button class="btn btn-primary order-btn">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://3.bp.blogspot.com/-OZBr--CxWuk/W0Mn9LGCqJI/AAAAAAAAMG8/SkEDcxURIYweHY_QvEoysz9RDcW7fjwdACLcBGAs/s1600/Image.jpg" class="card-img-top" alt="Product 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Laptops</h5>
-                            <p class="card-text">High-performance computing device</p>
+                            <h5 class="card-title">iPhone 13 Pro</h5>
+                            <p class="card-text">Latest iPhone with Pro camera system</p>
                             <p class="price">$999.99</p>
-                            <button class="btn btn-primary order-btn">Add to Cart</button>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('iPhone 13 Pro', 999.99)">
+                                Order Now
+                            </button>
                         </div>
                     </div>
                 </div>
+                <!-- Laptop -->
                 <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://cdn.wccftech.com/wp-content/uploads/2017/09/Beats-Studio3-Wireless-Headphones-With-Pure-Adaptive-Noise-Cancelation-1.jpg" class="card-img-top" alt="Product 3">
+                    <div class="card h-100">
+                        <img src="https://m.media-amazon.com/images/I/71TPda7cwUL._SL1500_.jpg" class="card-img-top" alt="MacBook Pro">
                         <div class="card-body">
-                            <h5 class="card-title">Headphones</h5>
-                            <p class="card-text">Premium wireless headphones</p>
-                            <p class="price">$199.99</p>
-                            <button class="btn btn-primary order-btn">Add to Cart</button>
+                            <h5 class="card-title">MacBook Pro</h5>
+                            <p class="card-text">M1 Pro chip, 16-inch display</p>
+                            <p class="price">$1999.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('MacBook Pro', 1999.99)">
+                                Order Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Headphones -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/airpods-max-select-silver-202011?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1604021221000" class="card-img-top" alt="AirPods Max">
+                        <div class="card-body">
+                            <h5 class="card-title">AirPods Max</h5>
+                            <p class="card-text">High-fidelity audio</p>
+                            <p class="price">$549.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('AirPods Max', 549.99)">
+                                Order Now
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Contact Us</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form id="contactForm">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
+        <!-- Fashion Section -->
+        <section id="fashion" class="category-section">
+            <h2 class="category-title">Fashion</h2>
+            <div class="row">
+                <!-- T-Shirt -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://m.media-amazon.com/images/I/61+VqYdVJTS._UY550_.jpg" class="card-img-top" alt="Premium T-Shirt">
+                        <div class="card-body">
+                            <h5 class="card-title">Premium T-Shirt</h5>
+                            <p class="card-text">100% Cotton Comfort Fit</p>
+                            <p class="price">$29.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('Premium T-Shirt', 29.99)">
+                                Order Now
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                </div>
+                <!-- Watch -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://tse4.mm.bing.net/th?id=OIP.z8FnZH-EdzeOPJLvW86V_QHaHa&pid=Api&P=0&h=180">
+                        <div class="card-body">
+                            <h5 class="card-title">Smart Watch</h5>
+                            <p class="card-text">Latest smartwatch with health features</p>
+                            <p class="price">$399.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('Smart Watch', 399.99)">
+                                Order Now
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                    </div>
+                </div>
+                <!-- Shoes -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://cdnb.lystit.com/photos/2011/01/25/nike-orange-dunk-retro-hitop-trainers-product-1-255128-797388087.jpeg">
+                        <div class="card-body">
+                            <h5 class="card-title">Nike Air Force 1</h5>
+                            <p class="card-text">Classic sneakers for everyday wear</p>
+                            <p class="price">$129.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('Nike Air Force 1', 129.99)">
+                                Order Now
+                            </button>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Food Section -->
+        <section id="food" class="category-section">
+            <h2 class="category-title">Food</h2>
+            <div class="row">
+                <!-- Pizza -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Pizza">
+                        <div class="card-body">
+                            <h5 class="card-title">Supreme Pizza</h5>
+                            <p class="card-text">Large pizza with all toppings</p>
+                            <p class="price">$19.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('Supreme Pizza', 19.99)">
+                                Order Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Burger -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Burger">
+                        <div class="card-body">
+                            <h5 class="card-title">Deluxe Burger</h5>
+                            <p class="card-text">Premium beef with special sauce</p>
+                            <p class="price">$12.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('Deluxe Burger', 12.99)">
+                                Order Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sushi -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Sushi">
+                        <div class="card-body">
+                            <h5 class="card-title">Sushi Platter</h5>
+                            <p class="card-text">Mixed sushi set, 16 pieces</p>
+                            <p class="price">$24.99</p>
+                            <button class="btn btn-primary order-btn" onclick="showOrderModal('Sushi Platter', 24.99)">
+                                Order Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
-    <footer class="text-center">
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 ShopCart. All rights reserved.</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>About ShopCart</h5>
+                    <p>Your one-stop destination for all shopping needs</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Home</a></li>
+                        <li><a href="#products" class="text-light">Products</a></li>
+                        <li><a href="#contact" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>Email: info@shopcart.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Order handling
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('order-btn')) {
-                const card = e.target.closest('.card');
-                const itemName = card.querySelector('.card-title').textContent;
-                const price = parseFloat(card.querySelector('.price').textContent.replace('$', ''));
-                showOrderModal(itemName, price);
-            }
-        });
+        const BASE_URL = 'http://localhost:5000';
 
-        function showOrderModal(itemName, price) {
+        async function showOrderModal(itemName, price) {
             const modalHTML = `
                 <div class="modal fade" id="orderModal" tabindex="-1">
                     <div class="modal-dialog">
@@ -180,11 +287,21 @@ Desktop/javascript/frontend/index.html -->
                                         <label class="form-label">Your Email</label>
                                         <input type="email" class="form-control" name="customerEmail" required>
                                     </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" name="phoneNumber" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Delivery Location</label>
+                                        <textarea class="form-control" name="location" rows="2" required></textarea>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="submitOrder('${itemName}', ${price})">Place Order</button>
+                                <button type="button" class="btn btn-primary" onclick="submitOrder('${itemName}', ${price})">
+                                    Place Order
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -200,57 +317,36 @@ Desktop/javascript/frontend/index.html -->
             });
         }
 
-        // Replace the existing submitOrder function with this:
         async function submitOrder(itemName, price) {
             const form = document.getElementById('orderForm');
-            const customerName = form.querySelector('[name="customerName"]').value;
-            const customerEmail = form.querySelector('[name="customerEmail"]').value;
-
-            if (!customerName || !customerEmail) {
-                alert('Please fill in all fields');
-                return;
-            }
-
             const orderData = {
                 itemName,
                 price,
-                customerName,
-                customerEmail,
+                customerName: form.querySelector('[name="customerName"]').value,
+                customerEmail: form.querySelector('[name="customerEmail"]').value,
+                phoneNumber: form.querySelector('[name="phoneNumber"]').value,
+                location: form.querySelector('[name="location"]').value,
                 status: 'pending'
             };
 
             try {
-                const response = await fetch('http://localhost:5000/api/orders', {
+                const response = await fetch(`${BASE_URL}/api/orders`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(orderData)
                 });
 
-                const data = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(data.message || 'Error placing order');
-                }
+                if (!response.ok) throw new Error('Failed to place order');
 
                 alert('Order placed successfully!');
-                const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
-                modal.hide();
-                form.reset();
+                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
             } catch (error) {
                 console.error('Error:', error);
                 alert('Error placing order: ' + error.message);
             }
         }
-
-        // Contact form handling
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message. We will get back to you soon!');
-            this.reset();
-        });
     </script>
 </body>
 </html>
